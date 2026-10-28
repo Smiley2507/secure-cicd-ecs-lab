@@ -1,0 +1,52 @@
+env:
+  contexts:
+  - excludePaths: []
+    name: baseline
+    urls:
+    - http://app-5:8000
+  parameters:
+    failOnError: true
+    progressToStdout: false
+jobs:
+- parameters:
+    enableTags: false
+    maxAlertsPerRule: 10
+  type: passiveScan-config
+- parameters:
+    maxDuration: 1
+    url: http://app-5:8000
+  type: spider
+- parameters:
+    maxDuration: 0
+  type: passiveScan-wait
+- parameters:
+    format: Long
+    summaryFile: /home/zap/zap_out.json
+  rules:
+  - action: IGNORE
+    customMessage: ''
+    id: 10096
+  - action: FAIL
+    customMessage: ''
+    id: 10010
+  - action: FAIL
+    customMessage: ''
+    id: 10011
+  - action: IGNORE
+    customMessage: ''
+    id: 10116
+  type: outputSummary
+- parameters:
+    reportDescription: ''
+    reportDir: /zap/wrk/
+    reportFile: zap.html
+    reportTitle: ZAP Scanning Report
+    template: traditional-html
+  type: report
+- parameters:
+    reportDescription: ''
+    reportDir: /zap/wrk/
+    reportFile: zap.json
+    reportTitle: ZAP Scanning Report
+    template: traditional-json
+  type: report

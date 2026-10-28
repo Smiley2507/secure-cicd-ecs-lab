@@ -49,12 +49,16 @@ The play prints the Jenkins unlock password and the SonarQube URL.
 ## 3. SonarQube (manual, once)
 
 1. Open `sonarqube_url` and log in as `admin` / `admin`. Change the password when prompted.
-2. **Quality gate:** *Quality Gates → Create* `Strict`, with these conditions on **Overall Code**:
-   - Security Rating is worse than A
-   - Reliability Rating is worse than A
-   - Security Hotspots Reviewed is less than 100%
+2. **Quality gate:** *Quality Gates → Create* `Strict`, with these conditions:
+   - **Overall Code:** Security Rating is worse than A
+   - **Overall Code:** Reliability Rating is worse than A
+   - **New Code:** Issues is greater than 0
 
    Set it as **Default**. *Sonar way* only checks *new* code, which is empty on a project's first analysis.
+   (SonarQube 26.x runs in MQR mode, where Security Hotspots are deprecated, so there is no hotspot condition.)
+
+   When the gate fails, review each finding under **Issues**: fix it, or mark it **Accepted** with a reason.
+   Then rebuild.
 3. **Token:** *My Account → Security → Generate Token*, type *Global Analysis Token*. Copy it.
 
 ## 4. Jenkins (manual, once)
