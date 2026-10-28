@@ -15,6 +15,11 @@ output "ssh_jenkins" {
   value = "ssh -i ${module.key_pair.private_key_path} ec2-user@${module.jenkins.public_ip}"
 }
 
+output "admin_cidr" {
+  description = "Where SSH, Jenkins and SonarQube are reachable from"
+  value       = local.admin_cidr
+}
+
 output "ecr_repository_url" {
   value = module.ecr.repository_url
 }

@@ -18,12 +18,16 @@ aws s3api put-bucket-versioning --bucket sandbox-state-bucket-001 \
 
 ```bash
 cd terraform
-echo "admin_cidr = \"$(curl -s https://checkip.amazonaws.com)/32\"" > terraform.tfvars
 terraform init
 terraform plan -out tfplan
 terraform apply tfplan
 terraform output
 ```
+
+SSH, Jenkins and SonarQube are opened to **your current public IP only**. Terraform
+looks it up at plan time (`terraform output admin_cidr`). If your IP changes and the UIs stop loading, run
+`terraform apply` again to move the rules. To allow a wider range instead, set
+`admin_cidr = "x.x.x.x/24"` in `terraform.tfvars`.
 
 On first apply the ECS service runs the **bootstrap** placeholder
 (`weather-app-bootstrap` family), so `curl $(terraform output -raw app_url)/health`

@@ -1,3 +1,24 @@
+# --- operator access -------------------------------------------------------
+# SSH, Jenkins and SonarQube are open only to the public IP of the machine
+# running Terraform, looked up at plan time. If that IP changes (new network,
+# DHCP lease), the next `terraform apply` moves the rules with it.
+# Set var.admin_cidr to override, e.g. to allow a whole office range.
+
+data "http" "operator_ip" {
+  url = "https://checkip.amazonaws.com"
+
+  lifecycle {
+    postcondition {
+      condition     = self.status_code == 200 && can(cidrhost("${chomp(self.response_body)}/32", 0))
+      error_message = "Could not determine this machine's public IP from checkip.amazonaws.com. Set admin_cidr in terraform.tfvars instead."
+    }
+  }
+}
+
+locals {
+  admin_cidr = coalesce(var.admin_cidr, "${chomp(data.http.operator_ip.response_body)}/32")
+}
+
 # Three security groups, chained by reference rather than by CIDR:
 #   internet -> ALB :80 -> tasks :8000
 # The tasks have public IPs (no NAT), so the SG reference is what keeps them
@@ -68,7 +89,7 @@ module "jenkins_sg" {
       ip_protocol           = "tcp"
       from_port             = port
       to_port               = port
-      cidr_ipv4             = var.admin_cidr
+      cidr_ipv4             = local.admin_cidr
     }
   ]
 

@@ -87,8 +87,9 @@ variable "ami_id" {
 # --- access ----------------------------------------------------------------
 
 variable "admin_cidr" {
-  description = "CIDR allowed to reach SSH, Jenkins and SonarQube. Set to your IP/32 in terraform.tfvars."
+  description = "CIDR allowed to reach SSH, Jenkins and SonarQube. Leave null to use the public IP of whoever runs Terraform (see security.tf)."
   type        = string
+  default     = null
 }
 
 variable "private_key_path" {
