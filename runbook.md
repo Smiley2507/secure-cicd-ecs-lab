@@ -38,6 +38,7 @@ returns `ok` before any pipeline has run.
 ```bash
 cd ../ansible
 source ~/ansible-venv/bin/activate
+pip install -r requirements.txt          # ansible-core, boto3, botocore
 ansible-galaxy collection install -r requirements.yml
 ansible-inventory --graph            # expect secure-cicd-jenkins under @role_jenkins
 ansible-playbook site.yml
