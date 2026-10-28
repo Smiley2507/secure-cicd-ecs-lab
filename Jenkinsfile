@@ -96,6 +96,10 @@ pipeline {
                 withCredentials([string(credentialsId: 'sonar_token', variable: 'SONAR_TOKEN')]) {
                     // The workspace is mounted at the SAME path inside the
                     // container so the absolute paths in coverage.xml resolve.
+                    // The container runs as the jenkins uid, which cannot
+                    // write the image's own cache (/opt/sonar-scanner/.sonar)
+                    // or work dir (/tmp/.scannerwork) — both go in the
+                    // workspace instead.
                     // qualitygate.wait makes the scanner itself exit non-zero
                     // when the gate fails — no webhook needed.
                     sh '''
@@ -103,9 +107,11 @@ pipeline {
                             -e SONAR_HOST_URL="$SONAR_HOST" \
                             -e SONAR_TOKEN \
                             -e SONAR_USER_HOME="$WORKSPACE/.sonar" \
+                            -e SCANNER_WORKDIR_PATH="$WORKSPACE/.scannerwork" \
                             -v "$WORKSPACE:$WORKSPACE" -w "$WORKSPACE" \
                             "$SONAR_IMAGE" \
                             -Dsonar.projectBaseDir="$WORKSPACE" \
+                            -Dsonar.working.directory="$WORKSPACE/.scannerwork" \
                             -Dsonar.projectVersion="$IMAGE_TAG" \
                             -Dsonar.qualitygate.wait=true \
                             -Dsonar.qualitygate.timeout=300
