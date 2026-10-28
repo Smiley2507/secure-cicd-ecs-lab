@@ -1,7 +1,3 @@
-# A security group whose rules can name either a CIDR or another security
-# group as the peer. Rules use count rather than for_each: a referenced group's
-# ID is unknown until apply, and for_each keys must be known at plan time.
-
 resource "aws_security_group" "this" {
   name        = var.name
   description = var.description
@@ -10,6 +6,7 @@ resource "aws_security_group" "this" {
   tags = { Name = var.name }
 }
 
+# count, not for_each: a referenced group's ID is unknown at plan time.
 resource "aws_vpc_security_group_ingress_rule" "this" {
   count = length(var.ingress_rules)
 

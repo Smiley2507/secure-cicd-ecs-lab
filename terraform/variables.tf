@@ -22,8 +22,6 @@ variable "app_name" {
   default     = "weather-app"
 }
 
-# --- network ---------------------------------------------------------------
-
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
   type        = string
@@ -41,8 +39,6 @@ variable "availability_zones" {
   type        = list(string)
   default     = ["eu-west-1a", "eu-west-1b"]
 }
-
-# --- ECS -------------------------------------------------------------------
 
 variable "container_port" {
   description = "Port gunicorn listens on inside the container"
@@ -64,8 +60,6 @@ variable "task_memory" {
   default = 512
 }
 
-# --- Jenkins host ----------------------------------------------------------
-
 variable "jenkins_instance_type" {
   description = "Jenkins and SonarQube share this host. SonarQube alone wants ~3 GB, hence t3.large."
   type        = string
@@ -83,8 +77,6 @@ variable "ami_id" {
   type        = string
   default     = "ami-0cbe64e51c016e5bf"
 }
-
-# --- access ----------------------------------------------------------------
 
 variable "admin_cidr" {
   description = "CIDR allowed to reach SSH, Jenkins and SonarQube. Leave null to use the public IP of whoever runs Terraform (see security.tf)."

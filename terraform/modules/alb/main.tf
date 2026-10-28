@@ -1,6 +1,3 @@
-# Internet-facing ALB, one HTTP listener, one IP-type target group (required
-# for Fargate's awsvpc networking).
-
 resource "aws_lb" "this" {
   name               = "${var.name}-alb"
   load_balancer_type = "application"
@@ -15,8 +12,6 @@ resource "aws_lb_target_group" "this" {
   vpc_id      = var.vpc_id
   target_type = "ip"
 
-  # Short drain so a rolling deploy finishes in a couple of minutes rather
-  # than the 300s default.
   deregistration_delay = 30
 
   health_check {

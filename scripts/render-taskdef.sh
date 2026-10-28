@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-# Render ecs/taskdef.template.json into a registrable task definition.
-#
-#   scripts/render-taskdef.sh <output.json>
-#
-# Every placeholder must be set in the environment. envsubst is given the
-# explicit variable list so it only touches these, and an unset one is caught
-# here rather than registered as an empty string.
 set -euo pipefail
 
 out="${1:?usage: render-taskdef.sh <output.json>}"
@@ -21,7 +14,6 @@ done
 
 envsubst "$(printf '${%s} ' "${vars[@]}")" < "$template" > "$out"
 
-# Fails on malformed JSON, and on any placeholder that slipped through.
 jq -e . "$out" > /dev/null
 if grep -q '\${' "$out"; then
     echo "render-taskdef: unrendered placeholder in $out" >&2

@@ -1,11 +1,3 @@
-# Python packages for the Ansible CONTROLLER (your machine, not the servers).
-#   python3 -m venv ~/ansible-venv && source ~/ansible-venv/bin/activate
-#   pip install -r requirements.txt
-#   ansible-galaxy collection install -r requirements.yml
-#
-# boto3/botocore: the aws_ec2 dynamic inventory cannot list instances without them.
-# ansible-core >= 2.18: older releases do not support the amazon.aws /
-# community.docker collection versions, nor Python 3.13+ as a controller.
 ansible-core>=2.18
 boto3>=1.34
 botocore>=1.34

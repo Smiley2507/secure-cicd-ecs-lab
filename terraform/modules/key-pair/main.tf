@@ -1,7 +1,3 @@
-# Generates an RSA key, registers the public half with EC2 and writes the
-# private half to disk for Ansible. The private key is also in Terraform state,
-# which is why the state bucket is encrypted and private.
-
 resource "tls_private_key" "this" {
   algorithm = "RSA"
   rsa_bits  = 4096

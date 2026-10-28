@@ -31,8 +31,6 @@
     state: directory
     mode: "0755"
 
-# Amazon Linux 2023 ships the Docker engine but not the Compose v2 plugin,
-# so it is fetched from the upstream release rather than from dnf.
 - name: Install the Docker Compose v2 plugin
   ansible.builtin.get_url:
     url: >-

@@ -10,8 +10,6 @@ variable "vpc_id" {
   type = string
 }
 
-# Each rule sets exactly one peer: cidr_ipv4 OR referenced_security_group_id.
-# from_port/to_port are null for ip_protocol = "-1" (all traffic).
 variable "ingress_rules" {
   type = list(object({
     description                  = string

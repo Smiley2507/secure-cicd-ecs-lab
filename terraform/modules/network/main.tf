@@ -1,7 +1,3 @@
-# VPC with one public subnet per AZ, an internet gateway and a shared public
-# route table. No private subnets and no NAT gateway: everything that needs
-# outbound access gets a public IP and is locked down by security groups.
-
 resource "aws_vpc" "this" {
   cidr_block           = var.vpc_cidr
   enable_dns_support   = true

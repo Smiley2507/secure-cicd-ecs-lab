@@ -1,9 +1,3 @@
-# --- operator access -------------------------------------------------------
-# SSH, Jenkins and SonarQube are open only to the public IP of the machine
-# running Terraform, looked up at plan time. If that IP changes (new network,
-# DHCP lease), the next `terraform apply` moves the rules with it.
-# Set var.admin_cidr to override, e.g. to allow a whole office range.
-
 data "http" "operator_ip" {
   url = "https://checkip.amazonaws.com"
 
@@ -18,14 +12,6 @@ data "http" "operator_ip" {
 locals {
   admin_cidr = coalesce(var.admin_cidr, "${chomp(data.http.operator_ip.response_body)}/32")
 }
-
-# Three security groups, chained by reference rather than by CIDR:
-#   internet -> ALB :80 -> tasks :8000
-# The tasks have public IPs (no NAT), so the SG reference is what keeps them
-# unreachable except through the load balancer.
-#
-# alb_sg and tasks_sg reference each other. That is not a cycle: each group is
-# created first, and only the rules depend on the other group's ID.
 
 module "alb_sg" {
   source = "./modules/security-group"
@@ -66,7 +52,6 @@ module "tasks_sg" {
     referenced_security_group_id = module.alb_sg.security_group_id
   }]
 
-  # ECR, CloudWatch Logs and Open-Meteo are all HTTPS.
   egress_rules = [{
     description = "HTTPS out: ECR pull, CloudWatch Logs, Open-Meteo"
     ip_protocol = "tcp"
@@ -93,8 +78,6 @@ module "jenkins_sg" {
     }
   ]
 
-  # Jenkins pulls scanner images, pushes to ECR, calls the AWS APIs and curls
-  # the ALB for the smoke test — unrestricted egress is the honest description.
   egress_rules = [{
     description = "All outbound"
     ip_protocol = "-1"

@@ -1,7 +1,3 @@
-# Cluster + Fargate service. Terraform creates the service on a placeholder
-# task definition; from the first pipeline run on, Jenkins registers the real
-# revisions and Terraform ignores which one the service points at.
-
 module "ecs" {
   source = "./modules/ecs-service"
 
@@ -20,6 +16,6 @@ module "ecs" {
 
   subnet_ids         = module.network.public_subnet_ids
   security_group_ids = [module.tasks_sg.security_group_id]
-  assign_public_ip   = true # no NAT gateway; see network.tf
+  assign_public_ip   = true
   target_group_arn   = module.alb.target_group_arn
 }

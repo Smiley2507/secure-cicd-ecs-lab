@@ -11,9 +11,7 @@ output "arn_suffix" {
   value       = aws_lb.this.arn_suffix
 }
 
-# An ECS service cannot attach to a target group that no load balancer
-# forwards to yet. Tying the output to the listener makes anything that
-# consumes it wait for the listener too.
+# ECS cannot attach a service to a target group with no listener yet; depends_on makes consumers wait for it.
 output "target_group_arn" {
   value      = aws_lb_target_group.this.arn
   depends_on = [aws_lb_listener.http]

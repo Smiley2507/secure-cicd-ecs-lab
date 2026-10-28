@@ -12,8 +12,6 @@ resource "aws_instance" "this" {
     encrypted   = true
   }
 
-  # IMDSv2 only. Hop limit 1 keeps containers on the host from reaching the
-  # instance role; only processes on the host itself get credentials.
   metadata_options {
     http_tokens                 = "required"
     http_put_response_hop_limit = 1

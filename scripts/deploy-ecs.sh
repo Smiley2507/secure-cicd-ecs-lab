@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
-# Register a rendered task definition and roll the ECS service onto it.
-#
-#   scripts/deploy-ecs.sh <rendered-taskdef.json> <evidence-dir>
-#
-# Needs ECS_CLUSTER, ECS_SERVICE and AWS_REGION in the environment.
 set -euo pipefail
 
 taskdef="${1:?usage: deploy-ecs.sh <taskdef.json> <evidence-dir>}"
@@ -25,8 +20,6 @@ aws ecs update-service \
     --task-definition "$new_arn" \
     --query 'service.deployments[0].[id,status,rolloutState]' --output text
 
-# Polls every 15s for up to 10 minutes until there is one deployment and
-# runningCount == desiredCount.
 echo "Waiting for the service to stabilise..."
 wait_rc=0
 aws ecs wait services-stable \
@@ -44,8 +37,7 @@ if [[ $wait_rc -ne 0 ]]; then
     exit 1
 fi
 
-# "Stable" is not the same as "deployed": if the circuit breaker rolled back,
-# the service is stable — on the OLD revision. Check what is actually primary.
+# "Stable" is not "deployed": after a circuit-breaker rollback the service is stable on the OLD revision.
 primary=$(jq -r '.services[0].deployments[] | select(.status == "PRIMARY")' "$evidence/describe-services.json")
 primary_arn=$(jq -r '.taskDefinition' <<<"$primary")
 rollout=$(jq -r '.rolloutState' <<<"$primary")

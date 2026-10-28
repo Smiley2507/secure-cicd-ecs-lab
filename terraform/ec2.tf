@@ -1,6 +1,3 @@
-# One host for Jenkins and SonarQube. The scanners themselves run as
-# short-lived containers on it during each build.
-
 module "key_pair" {
   source = "./modules/key-pair"
 
@@ -20,6 +17,5 @@ module "jenkins" {
   iam_instance_profile = module.jenkins_role.instance_profile_name
   root_volume_size     = var.jenkins_root_volume_size
 
-  # The Ansible inventory groups hosts by this tag: Role=jenkins -> role_jenkins
   tags = { Role = "jenkins" }
 }

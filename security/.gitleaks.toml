@@ -1,4 +1,3 @@
-# Gitleaks configuration: the built-in ruleset, plus a narrow allowlist.
 title = "secure-cicd-ecs-lab"
 
 [extend]

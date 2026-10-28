@@ -1,6 +1,4 @@
 ---
-# Follows the official Jenkins Linux (Fedora/RHEL) installation guide:
-# https://www.jenkins.io/doc/book/installing/linux/#fedora
 
 - name: Install Java for Jenkins
   ansible.builtin.dnf:
@@ -25,10 +23,6 @@
     update_cache: true
   notify: Restart Jenkins
 
-# Amazon Linux 2023 mounts /tmp as a tmpfs at 50% of RAM. On a 2 GB instance
-# that is ~956 MiB, below Jenkins' hardcoded 1 GiB "Free Temp Space" threshold,
-# so Jenkins takes the built-in node offline and no build can ever schedule.
-# Point java.io.tmpdir at the root volume instead of raising RAM.
 - name: Create a Jenkins temp directory on the root volume
   ansible.builtin.file:
     path: /var/lib/jenkins/tmp
@@ -59,9 +53,6 @@
     enabled: true
     daemon_reload: true
 
-# Jenkins builds Docker images on this host, so the jenkins service account
-# needs the docker socket. Group membership only takes effect after the
-# service restarts — hence the handler.
 - name: Add the jenkins user to the docker group
   ansible.builtin.user:
     name: jenkins
@@ -69,12 +60,6 @@
     append: true
   notify: Restart Jenkins
 
-# The ECS deploy replaces the old SSH deploy, so there is no app-server host
-# key to pre-trust any more. What the pipeline needs instead is on the host:
-#   aws     - ECR login, register-task-definition, update-service
-#             (AL2023 ships AWS CLI v2; credentials come from the instance role)
-#   envsubst - renders ecs/taskdef.template.json (from gettext)
-#   jq      - picks fields out of the AWS CLI's JSON
 - name: Install the deploy tooling
   ansible.builtin.dnf:
     name:

@@ -1,7 +1,3 @@
-# An IAM role an EC2 instance can assume, wrapped in an instance profile.
-# The instance gets short-lived credentials from the metadata service, so no
-# access key ever sits on its disk.
-
 resource "aws_iam_role" "this" {
   name = var.name
 

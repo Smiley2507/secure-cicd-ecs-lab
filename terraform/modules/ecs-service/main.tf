@@ -1,22 +1,13 @@
 resource "aws_ecs_cluster" "this" {
   name = var.cluster_name
 
-  # Publishes RunningTaskCount and per-service CPU/memory, which the
-  # ecs-alarms module reads.
   setting {
     name  = "containerInsights"
     value = "enabled"
   }
 }
 
-# --- bootstrap task definition ---------------------------------------------
-# The service needs *some* task definition to be created, but the ECR repo is
-# empty until the first pipeline run. This placeholder answers /health with a
-# 200 so the ALB marks it healthy; the first Jenkins build replaces it.
-#
-# It lives in its own family on purpose: the pipeline's cleanup step
-# deregisters old revisions of the app's family, and must never touch a
-# revision Terraform is tracking.
+# Placeholder until the first pipeline run. Separate family so cleanup-taskdefs.sh never deregisters it.
 resource "aws_ecs_task_definition" "bootstrap" {
   family                   = "${var.service_name}-bootstrap"
   requires_compatibilities = ["FARGATE"]
@@ -53,13 +44,9 @@ resource "aws_ecs_service" "this" {
   desired_count   = var.desired_count
   launch_type     = "FARGATE"
 
-  # Rolling update: start the new tasks before stopping the old ones, so
-  # capacity never drops below desired_count during a deploy.
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
 
-  # If the new revision never becomes healthy, ECS stops the rollout and puts
-  # the last good revision back.
   deployment_circuit_breaker {
     enable   = true
     rollback = true
@@ -81,8 +68,7 @@ resource "aws_ecs_service" "this" {
 
   propagate_tags = "SERVICE"
 
-  # Jenkins owns the task definition after the first deploy. Without this,
-  # every `terraform apply` would roll the service back to the placeholder.
+  # Jenkins registers new revisions; without this, every apply would roll back to the placeholder.
   lifecycle {
     ignore_changes = [task_definition]
   }

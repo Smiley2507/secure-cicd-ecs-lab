@@ -1,23 +1,13 @@
 ---
-# --- remote Python ---------------------------------------------------------
-# Amazon Linux 2023 ships Python 3.9 as /usr/bin/python3. Pinning it explicitly
-# stops Ansible's discovery from picking a different interpreter between runs.
 ansible_python_interpreter: /usr/bin/python3
 
-# --- pinned versions -------------------------------------------------------
 docker_compose_version: "v2.32.4"
 
-# Java for the Jenkins controller. Jenkins LTS requires 17 or 21.
 java_package: java-21-amazon-corretto
 
 aws_region: eu-west-1
 
-# --- SonarQube -------------------------------------------------------------
 sonarqube_image: "sonarqube:26.9.0.129388-community"
 sonarqube_db_image: "postgres:16-alpine"
 
-# Only reachable from the sonarqube container on the compose network — port
-# 5432 is never published. Lab-grade; in anything real this belongs in
-# ansible-vault:
-#   ansible-vault encrypt_string 'realpassword' --name 'sonarqube_db_password'
 sonarqube_db_password: "sonar-lab-db"

@@ -1,19 +1,4 @@
 ---
-# Ships Jenkins' own log to CloudWatch Logs.
-#
-# The container log driver cannot help here: Jenkins runs as a systemd service
-# on the host, not as a container, so its output never passes through Docker.
-# That is what the CloudWatch agent is for — it tails files on disk and pushes
-# the lines to a log group.
-#
-# Credentials come from the EC2 instance profile (ec2_observability). There are
-# no access keys on this host.
-
-# --- make Jenkins write a file ---------------------------------------------
-# The Jenkins RPM logs to the systemd journal. The CloudWatch agent tails
-# FILES, not the journal, so we redirect the unit's stdout/stderr to a file as
-# well. Without this the agent runs happily and ships nothing, which is the
-# worst kind of failure: silent.
 
 - name: Ensure the Jenkins log directory exists
   ansible.builtin.file:
@@ -31,8 +16,6 @@
     group: root
     mode: "0755"
 
-# A drop-in rather than editing jenkins.service directly: the packaged unit
-# file is replaced on every Jenkins upgrade, a drop-in survives it.
 - name: Redirect Jenkins output to a log file
   ansible.builtin.copy:
     dest: /etc/systemd/system/jenkins.service.d/10-logfile.conf
@@ -45,8 +28,6 @@
     mode: "0644"
   register: jenkins_logfile
 
-# Only when the drop-in actually changed — this restarts Jenkins, so it must
-# not happen on every run. Any build in progress would be killed.
 - name: Reload systemd and restart Jenkins
   ansible.builtin.systemd:
     name: jenkins
@@ -65,8 +46,6 @@
   until: jenkins_up is succeeded
   when: jenkins_logfile.changed
 
-# --- the agent --------------------------------------------------------------
-
 - name: Install the CloudWatch agent
   ansible.builtin.dnf:
     name: amazon-cloudwatch-agent
@@ -81,9 +60,6 @@
     mode: "0644"
   register: cw_agent_config
 
-# The agent is driven through its own control wrapper, not systemctl. This one
-# command loads the config, enables the service and starts it, so it replaces
-# both an `enable` and a `start` task.
 - name: Load the configuration and start the agent
   ansible.builtin.command:
     cmd: >-
@@ -98,8 +74,6 @@
     name: amazon-cloudwatch-agent
     state: started
     enabled: true
-
-# --- verification -----------------------------------------------------------
 
 - name: Confirm Jenkins is writing to the log file
   ansible.builtin.stat:

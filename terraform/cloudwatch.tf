@@ -1,6 +1,3 @@
-# --- logs ------------------------------------------------------------------
-
-# Target of the awslogs driver in the task definition.
 module "app_logs" {
   source = "./modules/log-group"
 
@@ -8,15 +5,12 @@ module "app_logs" {
   retention_in_days = var.log_retention_days
 }
 
-# Shipped by the CloudWatch agent on the Jenkins host.
 module "jenkins_logs" {
   source = "./modules/log-group"
 
   name              = "/jenkins/system"
   retention_in_days = var.log_retention_days
 }
-
-# --- alarms ----------------------------------------------------------------
 
 module "alarms" {
   source = "./modules/ecs-alarms"

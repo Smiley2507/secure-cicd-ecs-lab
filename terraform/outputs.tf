@@ -28,8 +28,6 @@ output "alarm_names" {
   value = module.alarms.alarm_names
 }
 
-# Everything the pipeline needs, for cross-checking against the names the
-# Jenkinsfile derives on its own.
 output "pipeline_env" {
   value = {
     AWS_REGION    = var.region

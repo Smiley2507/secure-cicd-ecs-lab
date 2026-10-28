@@ -1,6 +1,3 @@
-# Each alarm answers "did the last deploy break something?" — after a good
-# deploy all three sit in OK; a bad one that slips past the gates trips them.
-
 resource "aws_cloudwatch_metric_alarm" "running_tasks" {
   alarm_name          = "${var.name}-running-tasks-low"
   alarm_description   = "Fewer tasks running than desired_count"
@@ -31,7 +28,7 @@ resource "aws_cloudwatch_metric_alarm" "target_5xx" {
   evaluation_periods  = 1
   comparison_operator = "GreaterThanThreshold"
   threshold           = var.max_5xx_per_5min
-  treat_missing_data  = "notBreaching" # no traffic is not an error
+  treat_missing_data  = "notBreaching"
   alarm_actions       = var.alarm_actions
   ok_actions          = var.alarm_actions
 

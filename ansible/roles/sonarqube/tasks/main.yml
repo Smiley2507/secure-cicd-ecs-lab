@@ -1,7 +1,4 @@
 ---
-# SonarQube's embedded Elasticsearch checks these kernel settings at boot and
-# exits if they are too low. They are host-wide, so they cannot be set from
-# inside the container.
 - name: Raise the kernel limits Elasticsearch requires
   ansible.posix.sysctl:
     name: "{{ item.name }}"
@@ -29,7 +26,6 @@
     group: root
     mode: "0644"
 
-# Kept out of the compose file so the password is not in a world-readable file.
 - name: Write the environment file
   ansible.builtin.copy:
     dest: "{{ sonarqube_dir }}/.env"
@@ -45,8 +41,6 @@
     chdir: "{{ sonarqube_dir }}"
   changed_when: true
 
-# First boot creates the schema and the Elasticsearch indexes, which takes a
-# couple of minutes. Until status is UP, analyses are rejected.
 - name: Wait for SonarQube to report UP
   ansible.builtin.uri:
     url: "http://127.0.0.1:{{ sonarqube_port }}/api/system/status"

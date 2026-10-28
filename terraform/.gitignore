@@ -5,7 +5,5 @@ terraform.tfvars
 *.pem
 crash.log
 
-# Saved plans (`terraform plan -out`) hold every planned value in clear text,
-# including the generated SSH private key.
 tfplan
 *.tfplan
