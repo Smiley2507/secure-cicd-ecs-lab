@@ -1,0 +1,63 @@
+---
+# SonarQube's embedded Elasticsearch checks these kernel settings at boot and
+# exits if they are too low. They are host-wide, so they cannot be set from
+# inside the container.
+- name: Raise the kernel limits Elasticsearch requires
+  ansible.posix.sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    sysctl_file: /etc/sysctl.d/99-sonarqube.conf
+    state: present
+    reload: true
+  loop:
+    - { name: vm.max_map_count, value: "524288" }
+    - { name: fs.file-max, value: "131072" }
+
+- name: Create the SonarQube directory
+  ansible.builtin.file:
+    path: "{{ sonarqube_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0750"
+
+- name: Template the compose file
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ sonarqube_dir }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: "0644"
+
+# Kept out of the compose file so the password is not in a world-readable file.
+- name: Write the environment file
+  ansible.builtin.copy:
+    dest: "{{ sonarqube_dir }}/.env"
+    content: "SONAR_DB_PASSWORD={{ sonarqube_db_password }}\n"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+
+- name: Start SonarQube
+  ansible.builtin.command:
+    cmd: docker compose up -d --remove-orphans
+    chdir: "{{ sonarqube_dir }}"
+  changed_when: true
+
+# First boot creates the schema and the Elasticsearch indexes, which takes a
+# couple of minutes. Until status is UP, analyses are rejected.
+- name: Wait for SonarQube to report UP
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ sonarqube_port }}/api/system/status"
+    return_content: true
+  register: sonar_status
+  retries: 40
+  delay: 10
+  until: sonar_status.json is defined and sonar_status.json.status == "UP"
+
+- name: Print the SonarQube URL
+  ansible.builtin.debug:
+    msg:
+      - "SonarQube: http://{{ ansible_host }}:{{ sonarqube_port }}/  (first login admin/admin — change it)"
+      - "Version:   {{ sonar_status.json.version }}"

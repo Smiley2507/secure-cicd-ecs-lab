@@ -1,0 +1,6 @@
+---
+# Overridden by group_vars/all.yml; listed here so the role is self-describing.
+sonarqube_dir: /opt/sonarqube
+sonarqube_port: 9000
+sonarqube_image: "sonarqube:26.9.0.129388-community"
+sonarqube_db_image: "postgres:16-alpine"

@@ -1,0 +1,12 @@
+# Trivy ignore list — CVE IDs listed here do not fail the image scan.
+#
+# Policy: the gate fails on HIGH and CRITICAL vulnerabilities that HAVE a fix
+# available (--ignore-unfixed). A CVE with no upstream fix cannot be resolved
+# by this project, so blocking on it would block every build forever; those
+# are still listed in reports/trivy.txt.
+#
+# Anything added here needs a reason, an owner, and an expiry date — Trivy
+# honours `exp:` and starts failing again once it passes. Format:
+#
+#   # <why it does not apply> — <who> — <date>
+#   CVE-YYYY-NNNNN exp:YYYY-MM-DD

@@ -1,0 +1,13 @@
+# ZAP baseline rules: <plugin id> TAB <IGNORE|WARN|FAIL> TAB (<name>)
+# The pipeline gate fails on any High-risk alert, and on any rule set to FAIL
+# here. Everything else is reported but does not block the build.
+#
+# Timestamps in responses are Unix-epoch-looking numbers from the weather
+# data, not server internals.
+10096	IGNORE	(Timestamp Disclosure - Unix)
+# Cookies are not used by the app; a missing cookie flag would mean a
+# regression worth stopping on.
+10010	FAIL	(Cookie No HttpOnly Flag)
+10011	FAIL	(Cookie Without Secure Flag)
+# About the scanner itself, not the target. The image is pinned on purpose.
+10116	IGNORE	(ZAP is Out of Date)

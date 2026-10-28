@@ -1,0 +1,18 @@
+---
+- name: Baseline every managed host
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+    - common
+
+# One host runs Jenkins and SonarQube. The security scanners (Gitleaks, Snyk,
+# Trivy, Syft, ZAP) are not installed here at all — the pipeline runs each as
+# a pinned container, so the host only needs Docker.
+- name: Configure the CI host
+  hosts: role_jenkins
+  become: true
+  roles:
+    - jenkins
+    - sonarqube
+    - cloudwatch_agent

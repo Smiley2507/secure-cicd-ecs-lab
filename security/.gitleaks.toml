@@ -1,0 +1,11 @@
+# Gitleaks configuration: the built-in ruleset, plus a narrow allowlist.
+title = "secure-cicd-ecs-lab"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated scanner output. Gitleaks redacts what it finds, but other reports can quote matched strings back, and scanning them would re-flag the original finding."
+paths = [
+  '''(^|/)reports/''',
+]

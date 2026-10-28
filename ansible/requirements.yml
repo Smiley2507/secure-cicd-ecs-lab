@@ -1,0 +1,12 @@
+---
+collections:
+  # Dynamic EC2 inventory.
+  - name: amazon.aws
+    version: ">=9.0.0"
+
+  # Provides the profile_tasks callback enabled in ansible.cfg.
+  - name: ansible.posix
+    version: ">=1.6.0"
+
+  - name: community.docker
+    version: ">=4.0.0"
