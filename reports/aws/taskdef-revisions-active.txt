@@ -1,0 +1,1 @@
+TASKDEFINITIONARNS	arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:1
