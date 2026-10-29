@@ -8,4 +8,3 @@ opentelemetry-exporter-otlp-proto-http==1.29.0
 opentelemetry-instrumentation-flask==0.50b0
 opentelemetry-instrumentation-requests==0.50b0
 python-json-logger==2.0.7
-PyYAML==5.3.1
