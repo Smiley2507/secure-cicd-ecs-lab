@@ -1,0 +1,263 @@
+{
+    "services": [
+        {
+            "serviceArn": "arn:aws:ecs:eu-west-1:904570587823:service/secure-cicd-cluster/weather-app",
+            "serviceName": "weather-app",
+            "clusterArn": "arn:aws:ecs:eu-west-1:904570587823:cluster/secure-cicd-cluster",
+            "loadBalancers": [
+                {
+                    "targetGroupArn": "arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2",
+                    "containerName": "weather-app",
+                    "containerPort": 8000
+                }
+            ],
+            "serviceRegistries": [],
+            "status": "ACTIVE",
+            "desiredCount": 2,
+            "runningCount": 2,
+            "pendingCount": 0,
+            "launchType": "FARGATE",
+            "platformVersion": "LATEST",
+            "platformFamily": "Linux",
+            "taskDefinition": "arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:2",
+            "deploymentConfiguration": {
+                "deploymentCircuitBreaker": {
+                    "enable": true,
+                    "rollback": true,
+                    "resetOnHealthyTask": true,
+                    "thresholdConfiguration": {
+                        "type": "BOUNDED_PERCENT",
+                        "value": 50
+                    }
+                },
+                "maximumPercent": 200,
+                "minimumHealthyPercent": 100,
+                "strategy": "ROLLING",
+                "bakeTimeInMinutes": 0
+            },
+            "deployments": [
+                {
+                    "id": "ecs-svc/5056022424684337217",
+                    "status": "PRIMARY",
+                    "taskDefinition": "arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:2",
+                    "desiredCount": 2,
+                    "pendingCount": 0,
+                    "runningCount": 2,
+                    "failedTasks": 0,
+                    "createdAt": "2026-10-29T09:00:28.938000+00:00",
+                    "updatedAt": "2026-10-29T09:03:27.249000+00:00",
+                    "launchType": "FARGATE",
+                    "platformVersion": "1.4.0",
+                    "platformFamily": "Linux",
+                    "networkConfiguration": {
+                        "awsvpcConfiguration": {
+                            "subnets": [
+                                "subnet-06c92053c95be453e",
+                                "subnet-077e393f06af3f0f0"
+                            ],
+                            "securityGroups": [
+                                "sg-0cb0e782f7db79342"
+                            ],
+                            "assignPublicIp": "ENABLED"
+                        }
+                    },
+                    "rolloutState": "COMPLETED",
+                    "rolloutStateReason": "ECS deployment ecs-svc/5056022424684337217 completed."
+                }
+            ],
+            "roleArn": "arn:aws:iam::904570587823:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+            "events": [
+                {
+                    "id": "93c40733-30f7-4239-9006-5ea0e6f2f698",
+                    "createdAt": "2026-10-29T09:03:27.254000+00:00",
+                    "message": "(service weather-app) has reached a steady state."
+                },
+                {
+                    "id": "87792509-2e46-4cdb-975a-3208b1293104",
+                    "createdAt": "2026-10-29T09:03:27.253000+00:00",
+                    "message": "(service weather-app) (deployment ecs-svc/5056022424684337217) deployment completed."
+                },
+                {
+                    "id": "fa511c8b-4185-4f65-a440-be285899df1a",
+                    "createdAt": "2026-10-29T09:02:35.913000+00:00",
+                    "message": "(service weather-app, taskSet ecs-svc/8875807444513638332) has begun draining connections on 1 tasks."
+                },
+                {
+                    "id": "1ddd6a60-399e-4b7c-b922-d5f6f09d0034",
+                    "createdAt": "2026-10-29T09:02:35.908000+00:00",
+                    "message": "(service weather-app) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "86b5247c-9c40-4443-8a57-761480154a2f",
+                    "createdAt": "2026-10-29T09:02:26.205000+00:00",
+                    "message": "(service weather-app) has stopped 1 running tasks: (task 14caec169f3d412eb5dd154b58b96f32)."
+                },
+                {
+                    "id": "74e9b4e7-4204-49b2-b079-801e4214607a",
+                    "createdAt": "2026-10-29T09:02:06.055000+00:00",
+                    "message": "(service weather-app, taskSet ecs-svc/8875807444513638332) has begun draining connections on 1 tasks."
+                },
+                {
+                    "id": "8cf248e9-e854-46f1-b7c0-54b42d57bbbf",
+                    "createdAt": "2026-10-29T09:02:06.049000+00:00",
+                    "message": "(service weather-app) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "54929263-99b1-4f24-9412-544dbd7babea",
+                    "createdAt": "2026-10-29T09:01:56.056000+00:00",
+                    "message": "(service weather-app) has stopped 1 running tasks: (task 22843635c5be4acab8c8f7d6e46c3960)."
+                },
+                {
+                    "id": "8ed0aedc-1fc0-415f-b7d1-9b8d5c384e66",
+                    "createdAt": "2026-10-29T09:01:35.140000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "84d26fec-9e8a-4dc8-b9e9-762ed3254828",
+                    "createdAt": "2026-10-29T09:01:16.089000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 1b79b9b254ab48b29118dbec32c28796)."
+                },
+                {
+                    "id": "a0f2672b-5c67-49a5-9529-8861f7b324ce",
+                    "createdAt": "2026-10-29T09:01:06.442000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "bfdd99aa-fcb4-4ea3-adaf-2ca928098482",
+                    "createdAt": "2026-10-29T09:00:46.836000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 6d2c5666dba84ad1bb55a068e1beac36)."
+                },
+                {
+                    "id": "2b2d3daf-70b4-4ce2-9376-786f5f50049e",
+                    "createdAt": "2026-10-29T03:50:03.775000+00:00",
+                    "message": "(service weather-app) has reached a steady state."
+                },
+                {
+                    "id": "45818f53-0a13-48d2-b92b-eaaebc2da99d",
+                    "createdAt": "2026-10-28T21:49:59.856000+00:00",
+                    "message": "(service weather-app) has reached a steady state."
+                },
+                {
+                    "id": "2800557c-dcca-4a9f-a2a1-3e43a2fd507c",
+                    "createdAt": "2026-10-28T21:49:59.855000+00:00",
+                    "message": "(service weather-app) (deployment ecs-svc/8875807444513638332) deployment completed."
+                },
+                {
+                    "id": "02003117-a37d-43fb-8a41-70dba3a0d700",
+                    "createdAt": "2026-10-28T21:48:58.114000+00:00",
+                    "message": "(service weather-app, taskSet ecs-svc/2344659490866747098) has begun draining connections on 1 tasks."
+                },
+                {
+                    "id": "5ddfc366-d457-4e78-9ab3-c133cc2fbf9c",
+                    "createdAt": "2026-10-28T21:48:58.109000+00:00",
+                    "message": "(service weather-app) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "14580017-d52b-4349-bd20-88b0bb6967dd",
+                    "createdAt": "2026-10-28T21:48:48.789000+00:00",
+                    "message": "(service weather-app) has stopped 1 running tasks: (task 12cf7bbf9f8e430f8df7bf2280c9837a)."
+                },
+                {
+                    "id": "10b5f8b2-53fd-4089-a36e-78b00ea9e409",
+                    "createdAt": "2026-10-28T21:48:38.385000+00:00",
+                    "message": "(service weather-app, taskSet ecs-svc/2344659490866747098) has begun draining connections on 1 tasks."
+                },
+                {
+                    "id": "798ed540-8303-4c8b-a982-0eeb1b7e0166",
+                    "createdAt": "2026-10-28T21:48:38.361000+00:00",
+                    "message": "(service weather-app) deregistered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "431cde95-5816-4894-a470-4575a80817f4",
+                    "createdAt": "2026-10-28T21:48:28.091000+00:00",
+                    "message": "(service weather-app) has stopped 1 running tasks: (task 325e6af79ddd41e3938b630fa28f3065)."
+                },
+                {
+                    "id": "4ea3307b-23f2-4911-a3bf-dd15a3257f51",
+                    "createdAt": "2026-10-28T21:48:08.630000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "56f703e9-fdd7-4335-bd73-02f72804fe10",
+                    "createdAt": "2026-10-28T21:47:39.495000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 22843635c5be4acab8c8f7d6e46c3960)."
+                },
+                {
+                    "id": "f40efa1b-46fe-4d1c-b68b-4580d8e2c5cc",
+                    "createdAt": "2026-10-28T21:47:38.768000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "d2229d7f-5ced-4dad-9023-19ae5f60d0aa",
+                    "createdAt": "2026-10-28T21:47:18.559000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 14caec169f3d412eb5dd154b58b96f32)."
+                },
+                {
+                    "id": "4fdcefc3-9152-4dd8-bcae-0e180f46287e",
+                    "createdAt": "2026-10-28T17:26:25.833000+00:00",
+                    "message": "(service weather-app) has reached a steady state."
+                },
+                {
+                    "id": "97691e10-fbf7-4c43-9771-a19956f4b31d",
+                    "createdAt": "2026-10-28T17:26:25.832000+00:00",
+                    "message": "(service weather-app) (deployment ecs-svc/2344659490866747098) deployment completed."
+                },
+                {
+                    "id": "0e07240d-b41e-4bda-a1b6-01e0b7dfadbe",
+                    "createdAt": "2026-10-28T17:26:16.099000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "1181205b-605e-4b14-aabd-ddb99461d4be",
+                    "createdAt": "2026-10-28T17:25:45.062000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 12cf7bbf9f8e430f8df7bf2280c9837a)."
+                },
+                {
+                    "id": "96c9d662-1cf1-4cd6-aa30-8fd7918201cf",
+                    "createdAt": "2026-10-28T17:25:35.421000+00:00",
+                    "message": "(service weather-app) registered 1 targets in (target-group arn:aws:elasticloadbalancing:eu-west-1:904570587823:targetgroup/secure-cicd-tg/c02ad9f215dc2aa2)"
+                },
+                {
+                    "id": "ec5f1696-7858-45e3-afac-9544f57b06ca",
+                    "createdAt": "2026-10-28T17:25:15.313000+00:00",
+                    "message": "(service weather-app) has started 1 tasks: (task 325e6af79ddd41e3938b630fa28f3065)."
+                }
+            ],
+            "createdAt": "2026-10-28T17:24:56.065000+00:00",
+            "currentServiceRevisions": [
+                {
+                    "arn": "arn:aws:ecs:eu-west-1:904570587823:service-revision/secure-cicd-cluster/weather-app/5056022424684337217",
+                    "requestedTaskCount": 2,
+                    "runningTaskCount": 2,
+                    "pendingTaskCount": 0
+                }
+            ],
+            "placementConstraints": [],
+            "placementStrategy": [],
+            "networkConfiguration": {
+                "awsvpcConfiguration": {
+                    "subnets": [
+                        "subnet-06c92053c95be453e",
+                        "subnet-077e393f06af3f0f0"
+                    ],
+                    "securityGroups": [
+                        "sg-0cb0e782f7db79342"
+                    ],
+                    "assignPublicIp": "ENABLED"
+                }
+            },
+            "healthCheckGracePeriodSeconds": 30,
+            "schedulingStrategy": "REPLICA",
+            "deploymentController": {
+                "type": "ECS"
+            },
+            "createdBy": "arn:aws:iam::904570587823:user/boss_celse",
+            "enableECSManagedTags": false,
+            "propagateTags": "SERVICE",
+            "enableExecuteCommand": false,
+            "availabilityZoneRebalancing": "DISABLED",
+            "resourceManagementType": "CUSTOMER"
+        }
+    ],
+    "failures": []
+}

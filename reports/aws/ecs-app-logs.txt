@@ -1,40 +1,40 @@
-2026-10-29T08:17:24 {"asctime": "2026-10-29 08:17:24,469", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:24 {"asctime": "2026-10-29 08:17:24,469", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:24 10.30.1.26 - - [29/Oct/2026:08:17:24 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:24 10.30.1.26 - - [29/Oct/2026:08:17:24 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:25 {"asctime": "2026-10-29 08:17:25,093", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:25 10.30.2.94 - - [29/Oct/2026:08:17:25 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:25 {"asctime": "2026-10-29 08:17:25,093", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:25 10.30.2.94 - - [29/Oct/2026:08:17:25 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:34 {"asctime": "2026-10-29 08:17:34,492", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:34 127.0.0.1 - - [29/Oct/2026:08:17:34 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
-2026-10-29T08:17:38 {"asctime": "2026-10-29 08:17:38,063", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:38 127.0.0.1 - - [29/Oct/2026:08:17:38 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
-2026-10-29T08:17:39 {"asctime": "2026-10-29 08:17:39,477", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:39 {"asctime": "2026-10-29 08:17:39,477", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:39 10.30.1.26 - - [29/Oct/2026:08:17:39 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:39 10.30.1.26 - - [29/Oct/2026:08:17:39 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:40 {"asctime": "2026-10-29 08:17:40,107", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:40 10.30.2.94 - - [29/Oct/2026:08:17:40 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:40 {"asctime": "2026-10-29 08:17:40,108", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:40 10.30.2.94 - - [29/Oct/2026:08:17:40 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:54 {"asctime": "2026-10-29 08:17:54,489", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:54 {"asctime": "2026-10-29 08:17:54,489", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:54 10.30.1.26 - - [29/Oct/2026:08:17:54 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:54 10.30.1.26 - - [29/Oct/2026:08:17:54 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:55 {"asctime": "2026-10-29 08:17:55,123", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:55 10.30.2.94 - - [29/Oct/2026:08:17:55 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:17:55 {"asctime": "2026-10-29 08:17:55,123", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:17:55 10.30.2.94 - - [29/Oct/2026:08:17:55 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:18:04 {"asctime": "2026-10-29 08:18:04,496", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:04 127.0.0.1 - - [29/Oct/2026:08:18:04 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
-2026-10-29T08:18:08 {"asctime": "2026-10-29 08:18:08,050", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:08 127.0.0.1 - - [29/Oct/2026:08:18:08 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
-2026-10-29T08:18:09 {"asctime": "2026-10-29 08:18:09,501", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:09 {"asctime": "2026-10-29 08:18:09,502", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:09 10.30.1.26 - - [29/Oct/2026:08:18:09 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:18:09 10.30.1.26 - - [29/Oct/2026:08:18:09 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:18:10 {"asctime": "2026-10-29 08:18:10,135", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:10 10.30.2.94 - - [29/Oct/2026:08:18:10 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
-2026-10-29T08:18:10 {"asctime": "2026-10-29 08:18:10,135", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
-2026-10-29T08:18:10 10.30.2.94 - - [29/Oct/2026:08:18:10 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:05 {"asctime": "2026-10-29 09:10:05,665", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:05 10.30.1.26 - - [29/Oct/2026:09:10:05 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:05 {"asctime": "2026-10-29 09:10:05,815", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:05 10.30.2.94 - - [29/Oct/2026:09:10:05 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:06 {"asctime": "2026-10-29 09:10:06,449", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:06 127.0.0.1 - - [29/Oct/2026:09:10:06 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
+2026-10-29T09:10:06 {"asctime": "2026-10-29 09:10:06,973", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:07 10.30.2.94 - - [29/Oct/2026:09:10:07 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:07 {"asctime": "2026-10-29 09:10:07,050", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:07 10.30.1.26 - - [29/Oct/2026:09:10:07 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:07 {"asctime": "2026-10-29 09:10:07,260", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:07 127.0.0.1 - - [29/Oct/2026:09:10:07 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
+2026-10-29T09:10:20 {"asctime": "2026-10-29 09:10:20,677", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:20 10.30.1.26 - - [29/Oct/2026:09:10:20 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:20 {"asctime": "2026-10-29 09:10:20,827", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:20 10.30.2.94 - - [29/Oct/2026:09:10:20 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:21 {"asctime": "2026-10-29 09:10:21,989", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:21 10.30.2.94 - - [29/Oct/2026:09:10:21 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:22 {"asctime": "2026-10-29 09:10:22,029", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:22 10.30.1.26 - - [29/Oct/2026:09:10:22 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:35 {"asctime": "2026-10-29 09:10:35,689", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:35 10.30.1.26 - - [29/Oct/2026:09:10:35 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:35 {"asctime": "2026-10-29 09:10:35,842", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:35 10.30.2.94 - - [29/Oct/2026:09:10:35 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:36 {"asctime": "2026-10-29 09:10:36,362", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:36 127.0.0.1 - - [29/Oct/2026:09:10:36 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
+2026-10-29T09:10:36 {"asctime": "2026-10-29 09:10:36,999", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:37 10.30.2.94 - - [29/Oct/2026:09:10:37 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:37 {"asctime": "2026-10-29 09:10:37,050", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:37 10.30.1.26 - - [29/Oct/2026:09:10:37 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:37 {"asctime": "2026-10-29 09:10:37,250", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:37 127.0.0.1 - - [29/Oct/2026:09:10:37 +0000] "GET /health HTTP/1.1" 200 38 "-" "Python-urllib/3.12"
+2026-10-29T09:10:50 {"asctime": "2026-10-29 09:10:50,699", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:50 10.30.1.26 - - [29/Oct/2026:09:10:50 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:50 {"asctime": "2026-10-29 09:10:50,849", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:50 10.30.2.94 - - [29/Oct/2026:09:10:50 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:52 {"asctime": "2026-10-29 09:10:52,011", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:52 10.30.2.94 - - [29/Oct/2026:09:10:52 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"
+2026-10-29T09:10:52 {"asctime": "2026-10-29 09:10:52,051", "level": "INFO", "name": "root", "message": "request", "taskName": null, "method": "GET", "path": "/health", "status": 200, "logger": "root", "service": "weather-app"}
+2026-10-29T09:10:52 10.30.1.26 - - [29/Oct/2026:09:10:52 +0000] "GET /health HTTP/1.1" 200 38 "-" "ELB-HealthChecker/2.0"

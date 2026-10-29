@@ -1,0 +1,11 @@
+# scripts/cleanup-taskdefs.sh weather-app 1, run after build #8 was validated
+## before
+TASKDEFINITIONARNS	arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:1
+TASKDEFINITIONARNS	arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:2
+## run
+Family weather-app: 2 active revision(s), keeping 1. In use: weather-app:2
+  weather-app:1 -> INACTIVE
+## after (ACTIVE)
+TASKDEFINITIONARNS	arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:2
+## after (INACTIVE)
+TASKDEFINITIONARNS	arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:1

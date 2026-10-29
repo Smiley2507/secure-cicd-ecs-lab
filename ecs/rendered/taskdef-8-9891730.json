@@ -1,0 +1,44 @@
+{
+  "family": "weather-app",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "runtimePlatform": {
+    "operatingSystemFamily": "LINUX",
+    "cpuArchitecture": "X86_64"
+  },
+  "executionRoleArn": "arn:aws:iam::904570587823:role/secure-cicd-ecs-task-execution",
+  "taskRoleArn": "arn:aws:iam::904570587823:role/secure-cicd-ecs-task",
+  "containerDefinitions": [
+    {
+      "name": "weather-app",
+      "image": "904570587823.dkr.ecr.eu-west-1.amazonaws.com/weather-app:8-9891730",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 8000, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "APP_VERSION", "value": "8-9891730" }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD", "python", "-c",
+          "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/health').status == 200 else 1)"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 15
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/weather-app",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "web"
+        }
+      }
+    }
+  ]
+}

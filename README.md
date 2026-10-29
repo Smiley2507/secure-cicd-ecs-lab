@@ -349,7 +349,39 @@ Security/High; the reasoning for accepting it is under
 Build **#5** (`5-4cc6476`) after the review: Security **A**, Reliability
 **A**, 78.4% coverage, 0.0% duplication. Every stage then ran and passed.
 
-### 2. Security reports from the green build
+### 2. Injected vulnerable dependency: blocked, then fixed
+
+The lab's required test, run as three commits on `main`:
+
+| Build | Commit | Change | Result |
+|---|---|---|---|
+| #6 | `447046e` | Add `PyYAML==5.3.1` to `app/requirements.txt` | **Failed at SCA (Snyk)**, nothing built, pushed or deployed |
+| #7 | `aeec6b5` | Revert it | Passed all six gates, then failed at *Deploy to ECS* (see below) |
+| #8 | `9891730` | Fix the deploy script | **Green**, deployed as `weather-app:2` |
+
+![Build #6: SCA (Snyk) fails on critical pyyaml@5.3.1, later stages skipped](screenshots/sca-gate-console.png)
+
+Snyk reported **critical** `SNYK-PYTHON-PYYAML-590151`, *Arbitrary Code
+Execution*: CVE-2020-14343, CVSS 9.8, fixed in 5.4
+([`reports/failed-build-6/snyk.json`](reports/failed-build-6/snyk.json)).
+Every stage after SCA was skipped. Afterwards, the service was still on
+`weather-app:1`, ECR had no `6-447046e` image, and `/health` still answered
+`5-4cc6476`
+([`reports/failed-build-6/ecs-unchanged.txt`](reports/failed-build-6/ecs-unchanged.txt)).
+
+Build #7, with the dependency removed, got through every security gate and
+pushed its image. It then failed at *Deploy to ECS* with `Permission denied`:
+a previous commit had dropped the executable bit from
+`scripts/deploy-ecs.sh`. That was a repository mistake, unrelated to the
+gates, and nothing was deployed. `9891730` restored the bit.
+
+![Build #8: every stage green](screenshots/pipeline-green-after-fix.png)
+
+Build **#8** passed every gate (Snyk: 0 vulnerabilities) and deployed
+`8-9891730` as **`weather-app:2`**
+([`reports/build-8/`](reports/build-8/)).
+
+### 3. Security reports from the first green build (#5)
 
 | Gate | Result | Report |
 |---|---|---|
@@ -361,7 +393,7 @@ Build **#5** (`5-4cc6476`) after the review: Security **A**, Reliability
 | Trivy | **0** fixable High/Critical (gate). 44 HIGH in Debian base packages with no fix yet, listed in full | [`trivy.json`](reports/trivy.json), [`trivy.txt`](reports/trivy.txt) |
 | ZAP | **0** High. 3 Medium: anti-CSRF tokens, CSP, anti-clickjacking header | [`zap/zap.html`](reports/zap/zap.html), [`zap/zap.json`](reports/zap/zap.json) |
 
-### 3. Task definition revision and ECS deployment
+### 4. Task definition revision and ECS deployment
 
 The rendered revision for this build is
 [`ecs/rendered/taskdef-5-4cc6476.json`](ecs/rendered/taskdef-5-4cc6476.json),
@@ -386,7 +418,13 @@ PRIMARY  COMPLETED  weather-app:1  running=2/2
 21:49:59  has reached a steady state.
 ```
 
-### 4. The new version is live
+Build #8 repeated this with the next revision. Template rendered to
+[`ecs/rendered/taskdef-8-9891730.json`](ecs/rendered/taskdef-8-9891730.json),
+registered as `weather-app:2`, rolled out to PRIMARY / COMPLETED with 2/2
+running ([`reports/build-8/ecs/describe-services.json`](reports/build-8/ecs/describe-services.json)).
+The two rendered files differ only in the image tag and `APP_VERSION`.
+
+### 5. The new version is live
 
 ![The weather app served through the ALB](screenshots/live-app.png)
 
@@ -395,17 +433,20 @@ PRIMARY  COMPLETED  weather-app:1  running=2/2
 `/health` reports `5-4cc6476`, the Jenkins build number and commit, which is
 also the ECR image tag and the `APP_VERSION` in the task definition. The
 smoke test stage required four consecutive matching responses
-([`reports/ecs/health.json`](reports/ecs/health.json)).
+([`reports/ecs/health.json`](reports/ecs/health.json)). After build #8 it
+returns `8-9891730`
+([`reports/build-8/ecs/health.json`](reports/build-8/ecs/health.json)).
 
-### 5. Not captured as screenshots
+### 6. Logs, alarms and cleanup
 
-| Item | How it is evidenced instead |
+Captured with the AWS CLI after build #8, in [`reports/aws/`](reports/aws/):
+
+| Item | Evidence |
 |---|---|
-| CloudWatch logs | The task definition sends logs with the `awslogs` driver to `/ecs/weather-app` ([rendered JSON](ecs/rendered/taskdef-5-4cc6476.json)). The log group is created by Terraform. |
-| Alarms | Defined in [`terraform/modules/ecs-alarms`](terraform/modules/ecs-alarms). The deployment kept 2/2 tasks healthy throughout (above), so none of the three conditions was met. |
-| ECR lifecycle policy | [`terraform/modules/ecr/main.tf`](terraform/modules/ecr/main.tf), applied by Terraform. |
-| Task definition cleanup | [`reports/ecs/cleanup.txt`](reports/ecs/cleanup.txt): `1 active revision(s), keeping 3`. Revisions are only deregistered once more than three exist, so the first build had nothing to remove. |
-| Vulnerable dependency blocked by SCA | **Planned; screenshots to follow.** The test: add `PyYAML==5.3.1` (CVE-2020-14343, Critical) to `app/requirements.txt` and build. The **SCA (Snyk)** stage fails, and nothing after it runs. Remove the line and build again; the build goes green. Steps in [runbook §5](runbook.md#5-gate-tests-evidence). |
+| Container logs in CloudWatch | [`ecs-app-logs.txt`](reports/aws/ecs-app-logs.txt): the app's JSON request lines and gunicorn's access log, read from `/ecs/weather-app`. [`log-streams.txt`](reports/aws/log-streams.txt) lists the `web/weather-app/<task-id>` streams the `awslogs` driver created, one per task. |
+| Alarms through the deployments | [`alarms.txt`](reports/aws/alarms.txt): all three alarms **OK**. None changed state during the rollouts of builds #5 and #8. |
+| ECR images and lifecycle policy | [`ecr-images.txt`](reports/aws/ecr-images.txt): `5-4cc6476`, `7-aeec6b5`, `8-9891730`, and no `6-447046e`, because the gate blocked it before the push. [`ecr-lifecycle-policy.json`](reports/aws/ecr-lifecycle-policy.json): the policy as applied. |
+| Task definition cleanup | [`taskdef-cleanup.txt`](reports/aws/taskdef-cleanup.txt): after build #8 was validated, `cleanup-taskdefs.sh weather-app 1` deregistered `weather-app:1` (now INACTIVE) and kept `weather-app:2`, the revision in use. The pipeline runs the same script on every build with *keep 3*, so it only removes revisions once more than three exist. |
 
 ---
 
