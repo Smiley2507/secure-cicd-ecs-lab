@@ -1,0 +1,15 @@
+# Captured after build #6 (447046e) failed at SCA (Snyk)
+## ECS service
+----------------------------------------------------------------------------------------
+|                                   DescribeServices                                   |
++----------------+---------------------------------------------------------------------+
+|  desired       |  2                                                                  |
+|  rollout       |  COMPLETED                                                          |
+|  running       |  2                                                                  |
+|  taskDefinition|  arn:aws:ecs:eu-west-1:904570587823:task-definition/weather-app:1   |
++----------------+---------------------------------------------------------------------+
+## ECR images (no 6-447046e tag)
+5-4cc6476
+## Live /health
+{"status":"ok","version":"5-4cc6476"}
+

@@ -1,0 +1,1 @@
+critical	pyyaml@5.3.1	SNYK-PYTHON-PYYAML-590151	Arbitrary Code Execution
