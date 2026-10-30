@@ -53,33 +53,21 @@ ECR instead of Docker Hub, and ECS task definition revisions instead of
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    dev([git push]) --> gh[(GitHub)]
-    gh --> jenkins
+![Architecture](diagrams/architecture.png)
 
-    subgraph host["EC2: Jenkins + SonarQube (t3.large)"]
-        jenkins[Jenkins pipeline]
-        sonar[(SonarQube + Postgres)]
-        jenkins -- analysis --> sonar
-    end
+1. A developer pushes to `main` on GitHub.
+2. Jenkins checks out the commit on the EC2 host.
+3. The security gates run in Docker on the same host. Snyk is the only one that calls out to a SaaS API.
+4. The image is pushed to ECR with an immutable `{build}-{sha}` tag.
+5. Jenkins registers a new task definition revision and updates the ECS service.
+6. ECS rolls the new tasks out, pulling the image from ECR. The circuit breaker rolls back a failed rollout.
+7. Users reach the tasks through the internet gateway and the ALB (port 80 → 8000).
+8. Tasks log to CloudWatch Logs, and CloudWatch alarms watch the service and the ALB.
 
-    jenkins -- push image --> ecr[(Amazon ECR)]
-    jenkins -- "register revision<br/>update service" --> ecs
-
-    subgraph vpc["VPC: 2 public subnets, 2 AZs"]
-        alb[Application Load Balancer :80]
-        subgraph ecs["ECS Fargate service"]
-            t1[task]
-            t2[task]
-        end
-        alb --> t1 & t2
-    end
-
-    ecr -. pull .-> ecs
-    ecs -- awslogs --> cw[("CloudWatch Logs<br/>+ alarms")]
-    user([browser]) --> alb
-```
+ECR, the ECS control plane, CloudWatch and S3 are regional managed services, so they sit
+outside the VPC. Only the Fargate tasks (one network interface each) and the Jenkins host
+live in the subnets. IAM is global. The source is
+[diagrams/architecture.drawio](diagrams/architecture.drawio) and opens in draw.io.
 
 | Layer | Tool | Runs |
 |---|---|---|
@@ -95,11 +83,7 @@ which revision the service points at.
 
 ## The pipeline
 
-```
-Checkout → Secret Scan → Unit Tests → SAST → SCA → Docker Build → SBOM
-        → Image Scan → DAST → Push to ECR → Register Task Def → Deploy
-        → Smoke Test → Cleanup Old Revisions
-```
+![Pipeline stages](diagrams/pipeline.png)
 
 Everything before **Push to ECR** is a gate. A failure anywhere there stops
 the build before an image exists in the registry, so a blocked change can
@@ -294,6 +278,7 @@ security/                   Gitleaks, Trivy and ZAP configuration
 sonar-project.properties    SonarQube project settings
 terraform/                  root config + modules/
 ansible/                    Jenkins + SonarQube host configuration
+diagrams/                   architecture and pipeline diagrams (draw.io + PNG)
 reports/                    sample security reports and SBOM (evidence)
 screenshots/                evidence
 runbook.md                  step-by-step bring-up, gate tests, teardown
